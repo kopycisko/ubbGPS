@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true"
     tools:context=".BeaconMonitoringActivity" >
 
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconMonStatus"
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:layout_marginTop="4dp"
@@ -124,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconConfBgBetwScanPeriod"
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconConfBgScanPeriod"
@@ -196,7 +196,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconConfFgBetwScanPeriod"
@@ -232,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconConfFgScanPeriod"
@@ -268,7 +268,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconConfParsers"
@@ -304,7 +304,7 @@
                     android:layout_width="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#4a4a4a"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/beaconConfPersist"
@@ -329,29 +329,28 @@
             android:textColor="@android:color/white"/>
 
         <!--Log area-->
+        <!--android:ems="10"-->
 
-        <RelativeLayout
+        <EditText
+            android:id="@+id/beaconMonLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-            <EditText
-                android:id="@+id/monitoringText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:ems="10"
-                android:gravity="left|bottom"
-                android:inputType="none"
-                android:selectAllOnFocus="false"
-                android:singleLine="false"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false">
-                <!--<requestFocus />-->
-            </EditText>
-        </RelativeLayout>
+            android:gravity="left|bottom"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="10sp"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:maxLines="20"
+            >
+            <!--<requestFocus />-->
+        </EditText>
 
     </LinearLayout>
 </ScrollView>

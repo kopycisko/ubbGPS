@@ -3,4 +3,7 @@
     <string name="in_progress">In progress...</string>
     <string name="beacons_monitoring_events_screen">Beacons monitoring events screen</string>
     <string name="start_ranging">Start Ranging</string>
+    <string name="local_service_started">Beacon ranging service started</string>
+    <string name="local_service_stopped">Beacon ranging service got stopped</string>
+    <string name="local_service_label">Beacon rranging activity service</string>
 </resources>
