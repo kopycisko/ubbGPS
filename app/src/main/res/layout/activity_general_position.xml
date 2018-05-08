@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GeneralPositionActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/position_top" />
+            <!--<TextView-->
+            <!--android:id="@+id/first_title"-->
+            <!--android:text="ubbGPS"-->
+            <!--android:textSize="64sp"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".8">
+
+            <!--android:text="underground beacon based GPS"-->
+            <TextView
+                android:id="@+id/first_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="ubbGPS"
+                android:textColor="@android:color/white"
+                android:textSize="42sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2">
+
+            <TextView
+                android:id="@+id/first_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="underground beacon based GPS"
+                android:textColor="@android:color/white"
+                android:textSize="11sp" />
+
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:padding="14dp"
+            android:rowCount="1">
+
+            <!-- Row 1 -->
+            <!-- Column 1 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_rowWeight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="16dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/black"
+                            android:textSize="42sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Corridor name"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Column 2 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_rowWeight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/genPosCorridor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0m"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/black"
+                            android:textSize="42sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Working meter"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+        </GridLayout>
+
+        <!--range button-->
+        <Button
+            android:id="@+id/genPosStart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            android:layout_gravity="center"
+            android:text="@string/start_ranging"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:onClick="doBindService"/>
+        <Button
+            android:id="@+id/genPosStop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            android:layout_gravity="center"
+            android:text="@string/stop_ranging"
+            android:background="@color/colorRed"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:onClick="doUnbindService" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:layout_gravity="center"
+            android:text="Settings"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <GridLayout
+            android:id="@+id/mainGrid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:padding="14dp"
+            android:rowCount="3">
+
+            <!-- Row 1 -->
+            <!-- Column 1 -->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_rowWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/beacon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beacons"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Column 2 -->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_rowWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/sensor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sensorics"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!-- Row 2 -->
+
+            <!-- Column 1 -->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_rowWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/position" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current position"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Column 2 -->
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_columnWeight="1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_rowWeight="1"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/article" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tests"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </GridLayout>
+
+    </LinearLayout>
+
+</ScrollView>

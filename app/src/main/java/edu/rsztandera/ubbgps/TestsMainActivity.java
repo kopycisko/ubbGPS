@@ -2,13 +2,11 @@ package edu.rsztandera.ubbgps;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,32 +19,35 @@ import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
 
-public class BeaconMonitoringActivity extends Activity implements BeaconConsumer {
-    protected static final String TAG = "MonitoringActivity";
+public class TestsMainActivity extends Activity implements BeaconConsumer {
+    protected static final String TAG = "TestActivity";
     private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
+//    private BeaconManager beaconManager;
     private boolean isRanging = false;
     private RangeNotifier rangeNotifier = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monitoring);
+        setContentView(R.layout.activity_test_main);
         enableLogScrol();
-        updateBeaconMonitoringDisplay();
+//        updateBeaconMonitoringDisplay();
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void enableLogScrol() {
-        EditText EtOne = (EditText) findViewById(R.id.beaconMonLog);
+        EditText EtOne = (EditText) findViewById(R.id.testMainLog);
         EtOne.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (v.getId() == R.id.beaconMonLog) {
+                if (v.getId() == R.id.testMainLog) {
                     v.getParent().requestDisallowInterceptTouchEvent(true);
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_UP:
                         v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                    default:
                         break;
                     }
                 }
@@ -58,30 +59,19 @@ public class BeaconMonitoringActivity extends Activity implements BeaconConsumer
     public void onRangingClicked(View view) {
 //        Intent myIntent = new Intent(this, BeaconRangingActivity.class);
 //        this.startActivity(myIntent);
-
         if(isRanging) {
             beaconManager.removeRangeNotifier(rangeNotifier);
             beaconManager.unbind(this);
         }
-        else {
+        else
             beaconManager.bind(this);
-        }
         isRanging = !isRanging;
-        setRangingButtonText();
-    }
-
-    private void setRangingButtonText() {
-        Button rangingButton = (Button) findViewById(R.id.beaconMonRangButton);
-        rangingButton.setText(isRanging ? R.string.stop_ranging: R.string.start_ranging);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        BeaconReferenceApplication app = (BeaconReferenceApplication) this.getApplicationContext();
-        app.setMonitoringActivity(this);
         if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
-        setRangingButtonText();
     }
 
     @Override
@@ -110,16 +100,9 @@ public class BeaconMonitoringActivity extends Activity implements BeaconConsumer
                 String beaconsFoundStr = "";
                 for (Beacon firstBeacon : beacons) {
                     MtBeacon positionBeacon = app.getBeaconByLib(firstBeacon);
-                    if (beaconsFoundStr != "") {
+                    if (beaconsFoundStr != "")
                         beaconsFoundStr += "\n";
-                    }
-                    beaconsFoundStr += "Beacon " +firstBeacon.getBluetoothName()+
-                            " (rssi:" + firstBeacon.getRssi() +
-                            ", avgrssi:" + firstBeacon.getRunningAverageRssi() +
-                            ", measurement cnt:" + firstBeacon.getMeasurementCount() +
-                            ", tx:" + firstBeacon.getTxPower() +
-                            ", packets: " + firstBeacon.getPacketCount()+
-                            ", " + firstBeacon.getDistance() + " m)";
+                    beaconsFoundStr += "Beacon " +firstBeacon.getBluetoothAddress()+ " (" + firstBeacon.getDistance() + " m)";
                 }
                 app.addBeaconLog(beaconsFoundStr);
                 updateBeaconMonitoringDisplay();
@@ -136,24 +119,24 @@ public class BeaconMonitoringActivity extends Activity implements BeaconConsumer
         final BeaconReferenceApplication app = (BeaconReferenceApplication) this.getApplicationContext();
         runOnUiThread(new Runnable() {
             public void run() {
-                EditText editText = (EditText)BeaconMonitoringActivity.this
+                EditText editText = (EditText)TestsMainActivity.this
                         .findViewById(R.id.beaconMonLog);
                 editText.setText("");
                 for (String item: app.allBeaconLogs) {
                     editText.append(item+"\n");
                 }
 
-                TextView tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconMonStatus);
+                TextView tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconMonStatus);
                 tv.setText(app.ifBeaconsAvailable? "Beacons detected." : "No beacons in range.");
-                tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconConfBgBetwScanPeriod);
+                tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconConfBgBetwScanPeriod);
                 tv.setText(Long.toString(beaconManager.getBackgroundBetweenScanPeriod()));
-                tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconConfBgScanPeriod);
+                tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconConfBgScanPeriod);
                 tv.setText(Long.toString(beaconManager.getBackgroundScanPeriod()));
-                tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconConfFgBetwScanPeriod);
+                tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconConfFgBetwScanPeriod);
                 tv.setText(Long.toString(beaconManager.getForegroundBetweenScanPeriod()));
-                tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconConfFgScanPeriod);
+                tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconConfFgScanPeriod);
                 tv.setText(Long.toString(beaconManager.getForegroundScanPeriod()));
-                tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconConfParsers);
+                tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconConfParsers);
                 String parsersIssued = ""; //TODO can be stored at the beggining; during the setup
                 for (BeaconParser beaconParser: beaconManager.getBeaconParsers()) {
                     if (parsersIssued != "")
@@ -161,7 +144,7 @@ public class BeaconMonitoringActivity extends Activity implements BeaconConsumer
                     parsersIssued += beaconParser.getLayout();
                 }
                 tv.setText(parsersIssued);
-                tv = (TextView) BeaconMonitoringActivity.this.findViewById(R.id.beaconConfPersist);
+                tv = (TextView) TestsMainActivity.this.findViewById(R.id.beaconConfPersist);
                 tv.setText(beaconManager.isRegionStatePersistenceEnabled()? "Enabled" : "Not enabled");
             }
         });

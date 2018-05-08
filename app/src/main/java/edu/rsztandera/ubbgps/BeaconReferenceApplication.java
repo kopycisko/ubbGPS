@@ -77,10 +77,10 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
         // matching a Region (defined above) are first seen.
         addBeaconLog( "did enter region.");
         if (!haveDetectedBeaconsSinceBoot) {
-            addBeaconLog( "auto launching MainActivity");
+            addBeaconLog( "auto launching GeneralPositionActivity");
 
             // The very first time since boot that we detect an beacon, we launch the
-            // MainActivity
+            // GeneralPositionActivity
             Intent intent = new Intent(this, BeaconMonitoringActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);

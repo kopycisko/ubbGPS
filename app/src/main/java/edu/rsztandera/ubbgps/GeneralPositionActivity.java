@@ -3,17 +3,20 @@ package edu.rsztandera.ubbgps;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
@@ -23,13 +26,15 @@ import org.altbeacon.beacon.BeaconManager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class GeneralPositionActivity extends AppCompatActivity {
     GridLayout mainGrid;
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     protected static final String TAG = "FirstScreenActivity";
 
     public static Map<String, Integer> firstScreenMap = new HashMap<String, Integer>();
     public static Beacon beaconsInRange[];
+    public BeaconRangingService beaconRangingService;
+    public boolean mIsBound;
 
 
     @Override
@@ -38,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         firstScreenMap.put("beacons", 0);
         firstScreenMap.put("sensors", 1);
         firstScreenMap.put("position", 2);
-        firstScreenMap.put("about", 3);
-        setContentView(R.layout.activity_main);
+        firstScreenMap.put("tests", 3);
+        setContentView(R.layout.activity_general_position);
         mainGrid = (GridLayout) findViewById(R.id.mainGrid);
 
         verifyBluetooth();
@@ -136,12 +141,21 @@ public class MainActivity extends AppCompatActivity {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,BeaconMonitoringActivity.class);
+                Intent intent = new Intent(GeneralPositionActivity.this,BeaconMonitoringActivity.class);
                 startActivity(intent);
             }
         });
 
-        for (int i = 1; i < mainGrid.getChildCount(); i++) {
+        cardView = (CardView) mainGrid.getChildAt(firstScreenMap.get("tests"));
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GeneralPositionActivity.this,TestsMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        for (int i = 1; i < 3; i++) {
             //You can see , all child item is CardView , so we just cast object to CardView
             cardView = (CardView) mainGrid.getChildAt(i);
             final int finalI = i;
@@ -149,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(MainActivity.this,ActivityOne.class);
+                    Intent intent = new Intent(GeneralPositionActivity.this,GenericActivity.class);
                     intent.putExtra("info","This is activity from card item index  "+finalI);
                     startActivity(intent);
 
@@ -157,4 +171,54 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+            beaconRangingService = ((BeaconRangingService.LocalBinder)service).getService();
+
+            // Tell the user about this for our demo.
+            Toast.makeText(GeneralPositionActivity.this, R.string.local_service_connected,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            beaconRangingService = null;
+            Toast.makeText(GeneralPositionActivity.this, R.string.local_service_disconnected,
+                    Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    public void doBindService(View view) {
+        // Establish a connection with the service.  We use an explicit
+        // class name because we want a specific service implementation that
+        // we know will be running in our own process (and thus won't be
+        // supporting component replacement by other applications).
+        bindService(new Intent(GeneralPositionActivity.this,
+                BeaconRangingService.class), mConnection, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    public void doUnbindService(View view) {
+        if (mIsBound) {
+            // Detach our existing connection.
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        doUnbindService(null);
+    }
+
 }

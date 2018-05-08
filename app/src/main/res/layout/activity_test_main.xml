@@ -18,7 +18,7 @@
             android:layout_height="55dp">
 
             <TextView
-                android:id="@+id/beaconMonHeader"
+                android:id="@+id/testMainHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -37,9 +37,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -55,7 +55,7 @@
                     android:textStyle="normal"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/beaconMonStatus"
+                    android:id="@+id/testMainStatus"
                     android:layout_marginTop="4dp"
                     android:text="Module iddle."
                     android:layout_width="wrap_content"
@@ -73,9 +73,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content" />
                 <TextView
                     android:layout_marginTop="4dp"
-                    android:id="@+id/beaconMonAmount"
+                    android:id="@+id/testMainAmount"
                     android:text="No data."
                     android:layout_width="wrap_content"
                     android:textSize="11sp"
@@ -109,9 +109,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -145,9 +145,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -181,9 +181,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -217,9 +217,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -253,9 +253,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -289,9 +289,9 @@
             android:background="@drawable/layout_underline">
             <ImageView
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/beacon"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -319,7 +319,7 @@
 
         <!--range button-->
         <Button
-            android:id="@+id/beaconMonRangButton"
+            android:id="@+id/Button01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -329,10 +329,8 @@
             android:textColor="@android:color/white"/>
 
         <!--Log area-->
-        <!--android:ems="10"-->
-
         <EditText
-            android:id="@+id/beaconMonLog"
+            android:id="@+id/testMainLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left|bottom"
@@ -348,9 +346,7 @@
             android:overScrollMode="always"
             android:scrollbarStyle="insideInset"
             android:maxLines="20"
-            >
-            <!--<requestFocus />-->
-        </EditText>
+            />
 
     </LinearLayout>
 </ScrollView>
