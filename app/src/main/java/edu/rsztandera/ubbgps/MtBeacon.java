@@ -6,7 +6,8 @@ public class MtBeacon{
     public String name;
     public String corridorId;
     public int workingMeter = 0;
-    public float currRssi = Definitions.RSSI_NOT_KNOWN;
+    public double currRssi = SignalDefs.RSSI_NOT_KNOWN;
+    public double lastRssi = SignalDefs.RSSI_NOT_KNOWN;
 
     public MtBeacon(Beacon origBeacon)
     {
@@ -26,6 +27,10 @@ public class MtBeacon{
 
     public boolean ifContainPosition() {
         return !corridorId.isEmpty();
+    }
+
+    public double getRssi() {
+        return SignalDefs.getLowpassRssiValue(currRssi, lastRssi);
     }
 
 }

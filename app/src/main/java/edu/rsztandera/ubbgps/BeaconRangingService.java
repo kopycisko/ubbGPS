@@ -7,18 +7,60 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
+import java.util.Collection;
 
 public class BeaconRangingService extends Service implements BeaconConsumer {
     protected static final String TAG = "RangingService";
+    private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
+    private boolean isRanging = false;
+    private RangeNotifier rangeNotifier = null;
 
     @Override
     public void onBeaconServiceConnect() {
+        Log.i(TAG, "beacon service connected");
+        final BeaconReferenceApplication app = (BeaconReferenceApplication) this.getApplicationContext();
+        rangeNotifier = new RangeNotifier() {
 
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                if (beacons.size() == 0) {
+                    return;
+                }
+                String beaconsFoundStr = "";
+                for (Beacon firstBeacon : beacons) {
+                    MtBeacon positionBeacon = app.getBeaconByLib(firstBeacon);
+                    if (beaconsFoundStr != "") {
+                        beaconsFoundStr += "\n";
+                    }
+                    beaconsFoundStr += "Beacon " +firstBeacon.getBluetoothName()+
+                            " (rssi:" + firstBeacon.getRssi() +
+                            ", avgrssi:" + firstBeacon.getRunningAverageRssi() +
+                            ", measurement cnt:" + firstBeacon.getMeasurementCount() +
+                            ", tx:" + firstBeacon.getTxPower() +
+                            ", packets: " + firstBeacon.getPacketCount()+
+                            ", " + firstBeacon.getDistance() + " m)";
+                }
+//                app.addBeaconLog(beaconsFoundStr);
+//                updateBeaconMonitoringDisplay();
+                Log.i(TAG, beaconsFoundStr);
+            }
+        };
+        beaconManager.addRangeNotifier(rangeNotifier);
+
+        try {
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+        } catch (RemoteException e) {   }
     }
     private NotificationManager mNM;
 
@@ -42,18 +84,22 @@ public class BeaconRangingService extends Service implements BeaconConsumer {
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
         // Display a notification about us starting.  We put an icon in the status bar.
+        Log.i(TAG, "beacon service created");
         showNotification();
+        toggleBeaconRanging();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "Received start id " + startId + ": " + intent);
+        Toast.makeText(this, "Start command; Received start id " + startId + ": " + intent, Toast.LENGTH_SHORT).show();
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         // Cancel the persistent notification.
+        toggleBeaconRanging();
         mNM.cancel(NOTIFICATION);
 
         // Tell the user we stopped.
@@ -92,5 +138,17 @@ public class BeaconRangingService extends Service implements BeaconConsumer {
 
         // Send the notification.
         mNM.notify(NOTIFICATION, notification);
+    }
+
+    private void toggleBeaconRanging() {
+        if(isRanging) {
+            beaconManager.removeRangeNotifier(rangeNotifier);
+            beaconManager.unbind(this);
+        }
+        else {
+            beaconManager.bind(this);
+        }
+        isRanging = !isRanging;
+        Log.i(TAG, isRanging? "Ranging started." : "Ranging stopped");
     }
 }
